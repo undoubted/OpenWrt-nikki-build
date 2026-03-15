@@ -14,7 +14,7 @@ jobs:
         arch:
           - x86_64
         branch:
-          - openwrt-23.05
+          - openwrt-23.05.6
 
     steps:
       - name: Extract version from tag
