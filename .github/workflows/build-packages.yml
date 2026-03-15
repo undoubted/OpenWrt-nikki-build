@@ -17,11 +17,18 @@ jobs:
           - openwrt-23.05
 
     steps:
+      - name: Extract version from tag
+        shell: bash
+        run: |
+          # 假设 GITHUB_REF 是 refs/tags/v1.25.2-20260316-1
+          TAG_NAME=${GITHUB_REF##*/}
+          VERSION=${TAG_NAME%%-*}
+          echo "CLEAN_VERSION=$VERSION" >> $GITHUB_ENV
       - name: checkout
         uses: actions/checkout@v4
         with:
           repository: nikkinikki-org/OpenWrt-nikki
-          ref: ${{ github.ref }}
+          ref: ${{ env.CLEAN_VERSION }}
           path: OpenWrt-nikki
 
       - name: build
