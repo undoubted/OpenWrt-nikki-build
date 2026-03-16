@@ -41,8 +41,12 @@ jobs:
           PACKAGES: luci-app-nikki
           NO_REFRESH_CHECK: true
 
+      - name: compress
+        run: |
+          tar -c -z -f nikki_${{ matrix.arch }}-${{ matrix.branch }}.tar.gz -C bin/packages/${{ matrix.arch }}/nikki .
+
       - name: release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            bin/packages/${{ matrix.arch }}/nikki/*.ipk
+            nikki_${{ matrix.arch }}-${{ matrix.branch }}.tar.gz
