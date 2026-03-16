@@ -17,7 +17,6 @@ jobs:
           - x86_64
         branch:
           - 23.05.6
-          - 22.03.7
 
     steps:
       - name: extract version from tag
