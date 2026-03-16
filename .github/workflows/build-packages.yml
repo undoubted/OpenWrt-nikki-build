@@ -17,13 +17,13 @@ jobs:
           - 23.05.6
 
     steps:
-      - name: Extract version from tag
+      - name: extract version from tag
         shell: bash
         run: |
-          # 假设 GITHUB_REF 是 refs/tags/v1.25.2-20260316-1
           TAG_NAME=${GITHUB_REF##*/}
           VERSION=${TAG_NAME%%-*}
           echo "CLEAN_VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: checkout
         uses: actions/checkout@v4
         with:
@@ -39,8 +39,8 @@ jobs:
           PACKAGES: luci-app-nikki
           NO_REFRESH_CHECK: true
 
-      - name: upload
-        uses: actions/upload-artifact@v4
+      - name: release
+        uses: softprops/action-gh-release@v2
         with:
-          name: nikki_${{ matrix.arch }}-${{ matrix.branch }}
-          path: bin/packages/${{ matrix.arch }}/nikki
+          files: |
+            bin/packages/${{ matrix.arch }}/nikki/*.ipk
